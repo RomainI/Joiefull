@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    id("org.jetbrains.kotlin.kapt")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -66,4 +68,25 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+    implementation(libs.androidx.core.splashscreen)
+
+    // Retrofit
+    implementation(libs.retrofit)
+    // Moshi for JSON parsing
+    implementation(libs.converter.moshi)
+    // OkHttp for HTTP client (included as Retrofit uses it internally)
+    implementation(libs.okhttp)
+    implementation(libs.json)
+    implementation(libs.moshi)
+    implementation(libs.moshi.kotlin)
+
+    implementation("com.google.dagger:hilt-android:2.50")
+    implementation("androidx.hilt:hilt-navigation-fragment:1.2.0")
+    kapt("com.google.dagger:hilt-android-compiler:2.50")
+
 }
+
+kapt {
+    correctErrorTypes = true
+}
+
