@@ -79,7 +79,7 @@ dependencies {
     implementation(libs.json)
     implementation(libs.moshi)
     implementation(libs.moshi.kotlin)
-
+    implementation("io.coil-kt:coil-compose:2.7.0")
     implementation("com.google.dagger:hilt-android:2.50")
     implementation("androidx.hilt:hilt-navigation-fragment:1.2.0")
     kapt("com.google.dagger:hilt-android-compiler:2.50")
