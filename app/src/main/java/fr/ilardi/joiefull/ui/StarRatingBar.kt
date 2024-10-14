@@ -38,7 +38,7 @@ fun StarRatingBar(
 
             Icon(
                 painter = icon,
-                contentDescription = null,
+                contentDescription = "rating $i stars",
                 tint = iconTintColor,
                 modifier = Modifier
                     .selectable(

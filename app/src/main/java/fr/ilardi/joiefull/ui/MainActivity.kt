@@ -33,6 +33,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.fragment.app.viewModels
+import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import dagger.hilt.android.AndroidEntryPoint
 import fr.ilardi.joiefull.model.Product
@@ -49,7 +50,16 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             JoiefullTheme {
-                MainScreen(viewModel = viewModel)
+               // MainScreen(viewModel = viewModel)
+                val products by viewModel.products.collectAsState(initial = emptyList())
+                val navController = rememberNavController()
+
+                AppNavHost(
+                    navController = navController,
+                    products = products,
+                    viewModel = viewModel
+                )
+
             }
         }
     }

@@ -83,11 +83,12 @@ fun ProductDetail(
                     onClick = { navController.navigateUp() },
                     modifier = Modifier
                         .align(Alignment.TopStart)
-                        .size(70.dp)
+                        .size(70.dp),
+
                 ) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                        contentDescription = "Up",
+                        contentDescription = "Back to main screen button",
                         tint = Color.Black
                     )
                 }
@@ -101,7 +102,7 @@ fun ProductDetail(
                 ) {
                     Icon(
                         painter = painterResource(R.drawable.ic_share),
-                        contentDescription = "Share",
+                        contentDescription = "Share button",
                         tint = Color.Black
                     )
                 }
@@ -137,7 +138,7 @@ fun ProductDetail(
                         )
                         Icon(
                             imageVector = Icons.Outlined.FavoriteBorder,
-                            contentDescription = "Like",
+                            contentDescription = "Like counter",
                             tint = Color.Black,
                             modifier = Modifier
                                 .size(20.dp)
@@ -160,7 +161,7 @@ fun ProductDetail(
                 Icon(
                     painter = painterResource(R.drawable.star),
                     tint = Color(0xFFFFC700),
-                    contentDescription = "star",
+                    contentDescription = "Rate",
                 )
                 Text(
                     text = product.likes.toString(),
@@ -199,7 +200,7 @@ fun ProductDetail(
             ) {
                 Image(
                     painter = rememberAsyncImagePainter("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzBNfBc8ZLnKfs7PR_RX20u2bxqIsq-Sa2xw&s"),
-                    contentDescription = null,
+                    contentDescription = "avatar photo",
                     modifier = Modifier
                         .size(50.dp)
                         .clip(CircleShape),
@@ -224,7 +225,6 @@ fun ProductDetail(
                     .fillMaxWidth()
                     .padding(top = 8.dp),
                 shape = RoundedCornerShape(16.dp),  // Ensure the border respects the rounded corners
-
             )
 
         }

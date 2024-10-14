@@ -10,7 +10,6 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -22,70 +21,46 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 
 @Composable
-fun MainScreen(viewModel: MainActivityViewModel, modifier: Modifier = Modifier) {
-    // Observe la liste des produits avec collectAsState()
+fun MainScreen(viewModel: MainActivityViewModel, navHostController: NavHostController) {
     val products by viewModel.products.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
-    val navController = rememberNavController()
-
-    NavHost(navController, startDestination = "main_screen") {
-        composable("main_screen") {
-            Surface(modifier = modifier) {
-                if (isLoading) {
-                    Box(
-                        contentAlignment = Alignment.Center,
-                        modifier = Modifier.fillMaxSize()
-                    ) {
-                        CircularProgressIndicator()
-                    }
-                } else {
-                    val groupedProducts = products.groupBy { it.category }
-                    LazyColumn(
-                        modifier = Modifier.fillMaxSize(),
-                        contentPadding = PaddingValues(16.dp)
-                    ) {
-                        groupedProducts.forEach { (category, productList) ->
-                            item {
-                                Text(
-                                    text = category.replaceFirstChar { it.uppercase() }.lowercase().replaceFirstChar { it.uppercase() },                                     fontWeight = FontWeight.Bold,
-                                    fontSize = 20.sp,
-                                    modifier = Modifier.padding(vertical = 8.dp)
+    Surface(modifier = Modifier.fillMaxSize()) {
+        if (isLoading) {
+            Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
+                CircularProgressIndicator()
+            }
+        } else {
+            val groupedProducts = products.groupBy { it.category }
+            LazyColumn(modifier = Modifier.fillMaxSize(), contentPadding = PaddingValues(16.dp)) {
+                groupedProducts.forEach { (category, productList) ->
+                    item {
+                        Text(
+                            text = category.replaceFirstChar { it.uppercase() },
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 20.sp,
+                            modifier = Modifier.padding(vertical = 8.dp)
+                        )
+                        LazyRow(modifier = Modifier.fillMaxSize()) {
+                            items(productList) { product ->
+                                ProductItem(
+                                    product = product,
+                                    modifier = Modifier
+                                        .padding(8.dp)
+                                        .clip(RoundedCornerShape(16.dp))
+                                        .clickable {
+                                            navHostController.navigate("detail_item/${product.id}")
+                                        }
                                 )
-
-                                LazyRow(modifier = Modifier.fillMaxSize()) {
-                                    items(productList) { product ->
-                                        ProductItem(
-                                            product = product,
-                                            modifier = Modifier
-                                                .padding(8.dp)
-                                                .clip(RoundedCornerShape(16.dp))
-                                                .clickable {
-                                                    navController.navigate("detail_item/${product.id}")
-                                                }
-                                        )
-                                    }
-                                }
                             }
                         }
                     }
                 }
             }
         }
-
-        composable("detail_item/{productId}") { backStackEntry ->
-            val productId = backStackEntry.arguments?.getString("productId")?.toIntOrNull()
-
-            productId?.let { id ->
-                val product = products.find { it.id == id }
-                product?.let {
-                    ProductDetail(viewModel, navController, product)
-                }
-            }
-        }
     }
 }
+
