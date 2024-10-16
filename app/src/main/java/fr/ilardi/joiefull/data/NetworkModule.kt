@@ -15,6 +15,6 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideCurrencyApiService(): ApiService {
-        return RetrofitInstance.api  
+        return RetrofitInstance.api
     }
 }

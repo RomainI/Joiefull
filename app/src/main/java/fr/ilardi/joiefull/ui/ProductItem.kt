@@ -105,14 +105,30 @@ fun ProductItem(
                     }
                 }
             }
-
-            Text(
-                text = product.name,
-                modifier = Modifier.width(150.dp),
-                fontWeight = FontWeight.Bold,
-                fontSize = 12.sp,// Ensure width matches image
-            )
-
+            Row(
+                modifier = Modifier
+                    .width(150.dp)
+                    .padding(top = 4.dp),
+            ) {
+                Text(
+                    text = product.name,
+                    modifier = Modifier.width(150.dp).weight(1f),
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 12.sp,
+                )
+                Icon(
+                    painter = painterResource(R.drawable.star),
+                    tint = Color(0xFFFFC700),
+                    contentDescription = "Rate",
+                )
+                Text(
+                    text = "4.6",
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 12.sp,
+                    textAlign = TextAlign.Right,
+                    modifier = Modifier
+                )
+            }
             // Row to display price and original price
             Row(
                 modifier = Modifier

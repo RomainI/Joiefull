@@ -166,7 +166,7 @@ fun ProductDetail(
                     contentDescription = "Rate",
                 )
                 Text(
-                    text = product.likes.toString(),
+                    text = "4.6",
                     fontWeight = FontWeight.Bold,
                     fontSize = 20.sp,
                     textAlign = TextAlign.Right,
@@ -227,7 +227,7 @@ fun ProductDetail(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 8.dp),
-                shape = RoundedCornerShape(16.dp),  // Ensure the border respects the rounded corners
+                shape = RoundedCornerShape(16.dp),
             )
 
         }
