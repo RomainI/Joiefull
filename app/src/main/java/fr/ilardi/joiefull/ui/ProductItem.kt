@@ -126,15 +126,17 @@ fun ProductItem(
                     fontSize = 12.sp,
 
                     )
-                Text(
-                    text = "${product.originalPrice.toInt()}€",
-                    fontWeight = FontWeight.Bold,
-                    color = Color.Gray,
-                    textAlign = TextAlign.Right,
-                    textDecoration = TextDecoration.LineThrough,
-                    modifier = Modifier.align(Alignment.CenterVertically),
-                    fontSize = 12.sp,
-                )
+
+                if (product.price != product.originalPrice)
+                    Text(
+                        text = "${product.originalPrice.toInt()}€",
+                        fontWeight = FontWeight.Bold,
+                        color = Color.Gray,
+                        textAlign = TextAlign.Right,
+                        textDecoration = TextDecoration.LineThrough,
+                        modifier = Modifier.align(Alignment.CenterVertically),
+                        fontSize = 12.sp,
+                    )
             }
         }
     }

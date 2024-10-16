@@ -27,7 +27,7 @@ class MainActivityViewModel @Inject constructor(
         getProductList()
     }
 
-    // Fonction pour récupérer la liste des produits
+    // Used to get the product list and init a boolean for the loading status
     private fun getProductList() {
         viewModelScope.launch {
             _isLoading.value = true
@@ -36,15 +36,13 @@ class MainActivityViewModel @Inject constructor(
             _isLoading.value = false
         }
     }
+    //Share function
     fun shareProduct(context: Context, product:Product) {
-        // Create a sharing intent
         val shareIntent = Intent().apply {
             action = Intent.ACTION_SEND
             type = "text/plain"
             putExtra(Intent.EXTRA_TEXT, "Regarde cet article : ${product.name} \n ${product.picture.url}")
         }
-
-        // Use the context to start the intent and show the chooser for sharing
         context.startActivity(Intent.createChooser(shareIntent, "Partage cet article via"))
     }
 }

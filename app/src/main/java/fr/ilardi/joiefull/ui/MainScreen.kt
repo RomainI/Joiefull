@@ -28,7 +28,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
+import fr.ilardi.joiefull.model.Product
 
 @Composable
 fun MainScreen(viewModel: MainActivityViewModel, navHostController: NavHostController) {
@@ -42,94 +42,115 @@ fun MainScreen(viewModel: MainActivityViewModel, navHostController: NavHostContr
         } else {
             BoxWithConstraints {
                 val screenWidth = maxWidth
-                val groupedProducts = products.groupBy { it.category }
-                //Verify if the device is a smartphone
+                //Verify if the device is a smartphone or a tablet and adapt the display
                 if (screenWidth < 600.dp) {
-                    LazyColumn(
-                        modifier = Modifier.fillMaxSize(),
-                        contentPadding = PaddingValues(16.dp)
-                    ) {
-                        groupedProducts.forEach { (category, productList) ->
-                            item {
-                                Text(
-                                    text = category.replaceFirstChar { it.uppercase() },
-                                    fontWeight = FontWeight.Bold,
-                                    fontSize = 20.sp,
-                                    modifier = Modifier.padding(vertical = 8.dp)
-                                )
-                                LazyRow(modifier = Modifier.fillMaxSize()) {
-                                    items(productList) { product ->
-                                        ProductItem(
-                                            product = product,
-                                            modifier = Modifier
-                                                .padding(8.dp)
-                                                .clip(RoundedCornerShape(16.dp))
-                                                .clickable {
-                                                    navHostController.navigate("detail_item/${product.id}")
-                                                }
-                                        )
-                                    }
-                                }
-                            }
-                        }
-                    }
+                    SmartphoneMainScreen(products, navHostController)
                 } else {
-                    var itemSelected by remember {
-                        mutableStateOf(0)
-                    }
-                    Row(
-                        modifier = Modifier.fillMaxSize()
-                    ) {
-                        LazyColumn(
-                            modifier = Modifier
-                                .fillMaxHeight()
-                                .weight(2f),
-                            contentPadding = PaddingValues(16.dp)
-                        )
+                    TabletMainScreen(products, navHostController, viewModel)
+                }
+            }
+        }
+    }
+}
 
-                        {
-                            groupedProducts.forEach { (category, productList) ->
-                                item {
-                                    Text(
-                                        text = category.replaceFirstChar { it.uppercase() },
-                                        fontWeight = FontWeight.Bold,
-                                        fontSize = 20.sp,
-                                        modifier = Modifier.padding(vertical = 8.dp)
-                                    )
-                                    LazyRow(
-                                        modifier = Modifier.fillMaxWidth()
-                                    ) {
-                                        items(productList) { product ->
-                                            ProductItem(
-                                                product = product,
-                                                modifier = Modifier
-                                                    .padding(8.dp)
-                                                    .clip(RoundedCornerShape(16.dp))
-                                                    .clickable {
-                                                        itemSelected = product.id
-                                                    }
-                                            )
-                                        }
-                                    }
+
+@Composable
+fun SmartphoneMainScreen(
+    productList: List<Product>,
+    navHostController: NavHostController,
+) {
+
+    val groupedProducts = productList.groupBy { it.category }
+    LazyColumn(
+        modifier = Modifier.fillMaxSize(),
+        contentPadding = PaddingValues(16.dp)
+    ) {
+        groupedProducts.forEach { (category, productList) ->
+            item {
+                Text(
+                    text = category.replaceFirstChar { it.uppercase() },
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 20.sp,
+                    modifier = Modifier.padding(vertical = 8.dp)
+                )
+                LazyRow(modifier = Modifier.fillMaxSize()) {
+                    items(productList) { product ->
+                        ProductItem(
+                            product = product,
+                            modifier = Modifier
+                                .padding(8.dp)
+                                .clip(RoundedCornerShape(16.dp))
+                                .clickable {
+                                    navHostController.navigate("detail_item/${product.id}")
                                 }
-                            }
-                        }
-                        Box(
-                            modifier = Modifier
-                                .fillMaxHeight()
-                                .weight(1f)
-                        ) {
-                            ProductDetail(
-                                viewModel,
-                                navHostController,
-                                products.get(itemSelected),
-                                Modifier
-                            )
-
-                        }
+                        )
                     }
                 }
             }
         }
     }
+}
+
+@Composable
+fun TabletMainScreen(
+    productList: List<Product>,
+    navHostController: NavHostController,
+    viewModel: MainActivityViewModel
+) {
+    var itemSelected by remember {
+        mutableStateOf(0)
+    }
+    val groupedProducts = productList.groupBy { it.category }
+    Row(
+        modifier = Modifier.fillMaxSize()
+    ) {
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxHeight()
+                .weight(2f),
+            contentPadding = PaddingValues(16.dp)
+        )
+
+        {
+            groupedProducts.forEach { (category, productList) ->
+                item {
+                    Text(
+                        text = category.replaceFirstChar { it.uppercase() },
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 20.sp,
+                        modifier = Modifier.padding(vertical = 8.dp)
+                    )
+                    LazyRow(
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        items(productList) { product ->
+                            ProductItem(
+                                product = product,
+                                modifier = Modifier
+                                    .padding(8.dp)
+                                    .clip(RoundedCornerShape(16.dp))
+                                    .clickable {
+                                        itemSelected = product.id
+                                    }
+                            )
+                        }
+                    }
+                }
+            }
+        }
+        Box(
+            modifier = Modifier
+                .fillMaxHeight()
+                .weight(1f)
+        ) {
+            ProductDetail(
+                viewModel,
+                navHostController,
+                productList.get(itemSelected),
+                Modifier
+            )
+
+        }
+    }
+
 }

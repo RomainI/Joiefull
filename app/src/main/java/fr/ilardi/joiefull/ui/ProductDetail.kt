@@ -45,6 +45,8 @@ import coil.compose.rememberAsyncImagePainter
 import fr.ilardi.joiefull.R
 import fr.ilardi.joiefull.model.Product
 
+
+//Compose used to display a product on a full screen (for smartphone) and on a part of the screen for tablet
 @Composable
 fun ProductDetail(
     viewModel: MainActivityViewModel,
@@ -85,7 +87,7 @@ fun ProductDetail(
                         .align(Alignment.TopStart)
                         .size(70.dp),
 
-                ) {
+                    ) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                         contentDescription = "Back to main screen button",
@@ -181,14 +183,15 @@ fun ProductDetail(
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.weight(1f)
                 )
-                Text(
-                    text = "${product.originalPrice} €",
-                    fontWeight = FontWeight.Bold,
-                    textAlign = TextAlign.Right,
-                    color = Color.Gray,
-                    textDecoration = TextDecoration.LineThrough, // Adds a strikethrough
-                    modifier = Modifier
-                )
+                if (product.price != product.originalPrice)
+                    Text(
+                        text = "${product.originalPrice} €",
+                        fontWeight = FontWeight.Bold,
+                        textAlign = TextAlign.Right,
+                        color = Color.Gray,
+                        textDecoration = TextDecoration.LineThrough,
+                        modifier = Modifier
+                    )
             }
 
             Text(text = product.picture.description)

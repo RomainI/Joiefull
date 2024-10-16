@@ -9,12 +9,12 @@ import fr.ilardi.joiefull.utils.RetrofitInstance
 import javax.inject.Singleton
 
 @Module
-@InstallIn(SingletonComponent::class)  // Le module est lié au cycle de vie de l'application
+@InstallIn(SingletonComponent::class)
 object NetworkModule {
 
     @Provides
     @Singleton
     fun provideCurrencyApiService(): ApiService {
-        return RetrofitInstance.api  // Utilise RetrofitInstance pour fournir CurrencyApiService
+        return RetrofitInstance.api  
     }
 }

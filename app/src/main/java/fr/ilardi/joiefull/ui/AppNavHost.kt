@@ -6,7 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import fr.ilardi.joiefull.model.Product
 
-
+//Used to create navigation routes for the application
 @Composable
 fun AppNavHost(navController: NavHostController, products: List<Product>, viewModel: MainActivityViewModel) {
     NavHost(navController = navController, startDestination = "main_screen") {
