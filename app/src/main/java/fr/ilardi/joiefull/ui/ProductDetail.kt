@@ -74,7 +74,7 @@ fun ProductDetail(
 
                 AsyncImage(
                     model = product.picture.url,
-                    contentDescription = product.picture.description,
+                    contentDescription = "photo of "+ product.picture.description,
                     modifier = Modifier
                         .fillMaxWidth()
                         .clip(RoundedCornerShape(16.dp)),
@@ -125,6 +125,16 @@ fun ProductDetail(
                             .padding(6.dp),
                         verticalAlignment = Alignment.CenterVertically // Aligner verticalement au centre
                     ) {
+
+                        Icon(
+                            imageVector = Icons.Outlined.FavoriteBorder,
+                            contentDescription = "Like counter",
+                            tint = Color.Black,
+                            modifier = Modifier
+                                .size(20.dp)
+                                .align(Alignment.CenterVertically)
+                        )
+
                         Text(
                             text = product.likes.toString(),
                             modifier = Modifier
@@ -133,18 +143,10 @@ fun ProductDetail(
                                     y = (-2).dp,
                                     x = 2.dp
                                 ),
-                            fontSize = 18.sp, // Taille du texte
+                            fontSize = 18.sp,
                             color = Color.Black,
-                            fontWeight = FontWeight.Bold, // Mettre le texte en gras
+                            fontWeight = FontWeight.Bold,
 
-                        )
-                        Icon(
-                            imageVector = Icons.Outlined.FavoriteBorder,
-                            contentDescription = "Like counter",
-                            tint = Color.Black,
-                            modifier = Modifier
-                                .size(20.dp)
-                                .align(Alignment.CenterVertically)
                         )
                     }
                 }

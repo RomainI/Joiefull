@@ -85,15 +85,7 @@ fun ProductItem(
                             .align(Alignment.Center)
                     ) {
 
-                        Text(
-                            text = product.likes.toString(),
-                            fontSize = 12.sp, // Adjust size to fit
-                            color = Color.Black,
-                            fontWeight = FontWeight.Bold,
-                            modifier = Modifier
-                                .align(Alignment.CenterVertically)
-                                .offset(y = (-4).dp, x = (2).dp)
-                        )
+
                         Icon(
                             imageVector = Icons.Outlined.FavoriteBorder,
                             contentDescription = "Like",
@@ -101,6 +93,15 @@ fun ProductItem(
                             modifier = Modifier
                                 .size(18.dp)
                                 .align(Alignment.CenterVertically)
+                        )
+                        Text(
+                            text = product.likes.toString(),
+                            fontSize = 12.sp,
+                            color = Color.Black,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier
+                                .align(Alignment.CenterVertically)
+                                .offset(y = (-4).dp, x = (2).dp)
                         )
                     }
                 }
